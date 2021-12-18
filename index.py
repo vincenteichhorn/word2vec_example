@@ -1,9 +1,9 @@
-from EpochLogger import EpochLogger
-from SentenceIterator import SentenceIterator
+from epoch_logger import EpochLogger
+from sentence_iterator import SentenceIterator
 from gensim import models
 
+# only for selecting nouns from most frequent words
 import nltk
-nltk.download('wordnet')
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
@@ -13,7 +13,7 @@ sentences = SentenceIterator('corpora\eng_news_2020_10K\eng_news_2020_10K-senten
 model = models.Word2Vec(sentences=sentences, callbacks=[epoch_logger], workers=4, epochs=15)
 
 
-# get most frequent nouns
+# get most frequent nouns via nltk.pos_tag, only for english words
 most_freq_nouns = []
 for word in model.wv.index_to_key:
     if nltk.pos_tag(nltk.word_tokenize(word))[0][1] == 'NN':
