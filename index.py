@@ -21,7 +21,7 @@ for word in words:
 # abbildet und der Betrag nicht von großer Bedeutung ist. Dies kommt durch die Aktivierung der OutputUnit des word2vec-Models 
 # mit der Softmax-Funktion. Hierbei werden sehr große Beträge gegenüber größeren ignoriert, da die Softmax-Funktion für
 # x->infinity gegen 1 konvergiert und somit für gleiche Aktivitäten in der OutputUnit sorgt. Weiterhin ist die Cosine Similarity
-# weitesgehen immun gegen "Inkonsistenzen" im Textkorpus. So haben Wörter mit eier hohen häufigkeit auch Vektoren mit kleineren
+# weitesgehend immun gegen "Inkonsistenzen" im Textkorpus. So haben Wörter mit einer hohen häufigkeit auch Vektoren mit kleineren
 # Beträgen, was zu einer kleineren Eclidean Distance zu Wörtern mit geringerem Vorkommen im Korpus führt, obwohl diese von der
 # Bedetung ähnlich sind.
 # Beispielsweise haben die Vektoren (8, 6) und (16, 12) einen unterschiedlichen Betrag, jedoch die gleiche Richtung. 
