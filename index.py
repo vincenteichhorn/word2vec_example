@@ -2,26 +2,16 @@ from epoch_logger import EpochLogger
 from sentence_iterator import SentenceIterator
 from gensim import models
 
-# only for selecting nouns from most frequent words
-import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-
 epoch_logger = EpochLogger()
 # corpus from https://wortschatz.uni-leipzig.de/de/download
-sentences = SentenceIterator('corpora\eng_news_2020_10K\eng_news_2020_10K-sentences.txt')
+# Load Sentences from corpus
+sentences = SentenceIterator('.\corpora\eng_news_2020_10K\eng_news_2020_10K-sentences.txt')
+# Train Word2Vec model with sentences, add callback for training epochs
 model = models.Word2Vec(sentences=sentences, callbacks=[epoch_logger], workers=4, epochs=15)
 
-
-# get most frequent nouns via nltk.pos_tag, only for english words
-most_freq_nouns = []
-for word in model.wv.index_to_key:
-    if nltk.pos_tag(nltk.word_tokenize(word))[0][1] == 'NN':
-        most_freq_nouns.append(word)
-        if len(most_freq_nouns) > 5:
-            break
-
-for word in most_freq_nouns:
+# Get top 10 most similar words (similar embeddings) for words in list
+words = ['time', 'year', 'COVID19', 'government', 'works']
+for word in words:
     most_sim = model.wv.most_similar(positive=[word], topn=10)
     print(word, [sim[0] for sim in most_sim])
 
